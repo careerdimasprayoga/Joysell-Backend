@@ -5,70 +5,64 @@ module.exports = {
     getAllProduct: async (request, response) => {
         try {
             const result = await getAllProduct();
-            return helper.response(response, 200, "Success get product", result);
+            return helper.response(response, 200, "Get Product Success", result);
         } catch(error) {
-            return helper.response(response, 400, "Bad request | Bad Boy", error);
+            return helper.response(response, 400, "Bad Request", error);
         }
-    },
-    getProductById: async (request, response) => {
+    }, getProductById: async (request, response) => {
         try {
-            // const id = request.params.id // belum sedderhana
-            const { id } = request.params // Sederhanakan
+            const { id } = request.params
             const result = await getProductById(id)
-            // console.log(result) // result ini betuknya array
             if (result.length > 0) {
-                return helper.response(response, 200, "Success get product by ID !", result);
+                return helper.response(response, 200, "Get Product by ID Success", result);
             } else {
                 return helper.response(response, 404, "Product not found !");
             }
         } catch (error) {
-            return helper.response(response, 400, "Bad request | Bad Boy", error);
+            return helper.response(response, 400, "Bad Request", error);
         }
-    },
-    postProduct: async(request, response) => {
+    }, postProduct: async(request, response) => {
         try {
-            const setData = { // sama denganline 45 bro, itu lebih singkats
-                // Kiri table, Kanan postman 
-                nama: request.body.product_name,
-                harga: request.body.product_harga,
+            const setData = {
+                name: request.body.name,
+                price: request.body.price,
+                id_category: request.body.id_category,
                 created: new Date(),
-                status: request.body.product_status
+                status: request.body.status
             }
             const result = await postProduct(setData)
             return helper.response(response, 201, "Product Created", result);
         } catch (error) {
             return helper.response(response, 400, "Bad Request", error);
         }
-    },
-    patchProduct: async(request, response) => {
+    }, patchProduct: async(request, response) => {
         try {
             const { id } = request.params
-            const { product_name, product_price, product_status } = request.body // Didalam postman
+            const { name, price, id_category, status } = request.body
             const setData = {
-                nama: product_name,
-                harga: product_price,
+                name: request.body.name,
+                price: request.body.price,
+                id_category: request.body.id_category,
                 updated: new Date(),
-                status: product_status
+                status: request.body.status
             }
             const checkId = await getProductById(id)
             if (checkId.length > 0) {
                 const result = await patchProduct(setData, id)
-                return helper.response(response, 200, "Success updated product !", result);
+                return helper.response(response, 200, "Update Product Success", result);
             } else {
-                return helper.response(response, 404, "Product not found !");
+                return helper.response(response, 404, "Product not found");
             }
         } catch (error) {
             return helper.response(response, 400, "Bad Request", error);
         }
-    },
-    deleteProduct: async(request, response) => {
+    }, deleteProduct: async(request, response) => {
         try {
             const{ id } = request.params
             const result = await deleteProduct(id)
-            // console.log(result)
-            response.send("Delete berhasil !")// Tampil di postman mamang
+            response.send("Delete Product Success")
         } catch (error) {
-            
+            return helper.response(response, 400, "Bad Request", error);
         }
     }
 }

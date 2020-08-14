@@ -7,21 +7,18 @@ module.exports = {
                 !error ? resolve(result) : reject(new Error(error))
             });
         })
-    },
-    getProductById: (id) => {
+    }, getProductById: (id) => {
         return new Promise((resolve, reject) => {
             connection.query("SELECT * FROM product WHERE id = ?", id, (error, result) => {
                 !error ? resolve(result) : reject(new Error(error))
             })
         })
-    },
-    postProduct: (setData) => {
+    }, postProduct: (setData) => {
         return new Promise((resolve, reject) => {
             connection.query("INSERT INTO product SET ?", setData, (error, result) => {
                 console.log(result)
                 if(!error) {
                     const newResult = {
-                        product_id: result.insertId,
                         ...setData
                     }
                     resolve(newResult)
@@ -30,8 +27,7 @@ module.exports = {
                 }
             })
         })
-    },
-    patchProduct: (setData, id) => {
+    }, patchProduct: (setData, id) => {
         return new Promise((resolve, reject) => {
             connection.query("UPDATE product SET ? WHERE id = ?", [setData, id], (error, result) => {
                 if(!error) {
@@ -45,8 +41,7 @@ module.exports = {
                 }
             })
         })
-    },
-    deleteProduct: (id) => {
+    }, deleteProduct: (id) => {
         return new Promise((resolve, reject) => {
             connection.query("DELETE FROM product WHERE id = ?", id, (error, result) => {
                 if(!error) {

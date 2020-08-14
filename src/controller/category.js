@@ -1,4 +1,4 @@
-const { getAllCategory, getCategoryById, postCategory, patchCategory } = require("../model/category")
+const { getAllCategory, getCategoryById, postCategory, patchCategory, deleteCategory } = require("../model/category")
 const helper = require("../helper/index.js")
 
 module.exports = {
@@ -38,11 +38,10 @@ module.exports = {
     patchCategory: async(request, response) => {
         try {
             const { id } = request.params
-            const { category_name } = request.body
             const setData = {
-                name: category_name
+                name: request.body.category_name
             }
-            const checkId = await getProductById(id)
+            const checkId = await getCategoryById(id)
             if (checkId.length > 0) {
                 const result = await patchCategory(setData, id)
                 return helper.response(response, 200, "Update Category Success", result);
@@ -52,5 +51,34 @@ module.exports = {
         } catch (error) {
             return helper.response(response, 400, "Bad Request", error);
         }
+    },
+    deleteCategory: async(request, response) => {
+        try {
+            const{ id } = request.params
+            const result = await deleteCategory(id)
+            response.send("Delete Category Success")
+        } catch (error) {
+            return helper.response(response, 400, "Bad Request", error);
+        }
     }
 }
+
+
+// ORDER
+// id_order    |   id_product  |   nama_product    |   id_history  |   price   |   ppn     |
+// 1           | 1             | Caffucino         | 1             | 25.000    | 2500      |
+// 2           | 1             | Caffucino         | 1             | 25.000    | 2500      |
+// 3           | 1             | Caffucino         | 1             | 25.000    | 2500      |
+// 4           | 2             | Cafelatte         | 1             | 15.000    | 1500      |
+// 5           | 2             | Caffucino         | 2             | 15.000    | 1500      |
+
+// HISTORY
+// id_history  |   invoice     |   subtotal        |   Date        |
+// 1           | 320120        | 75000             | 2020-09-01    | 
+// 2
+// 3
+// 4
+
+// TRANSACTION
+// id_transaction   |   id_product  |   nama_product    |   price   |   ppn   |
+// 
