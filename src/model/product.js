@@ -1,10 +1,16 @@
 const connection = require("../config/mysql");
 
 module.exports = {
-    getAllProduct: () => {
-        return new Promise((resolve,reject) => {
-            connection.query(`SELECT * FROM product`, (error, result) => {
+    getProduct: (limit, offset) => {
+        return new Promise((resolve, reject) => {
+            connection.query("SELECT * FROM product LIMIT ? OFFSET ?", [limit, offset], (error, result) => {
                 !error ? resolve(result) : reject(new Error(error))
+            });
+        })
+    }, getProductCount: () => {
+        return new Promise((resolve, reject) => {
+            connection.query("SELECT COUNT(*) as total FROM product", (error, result) => {
+                !error ? resolve(result[0].total) : reject(new Error(error)) // Conver array to number
             });
         })
     }, getProductById: (id) => {

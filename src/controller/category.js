@@ -65,12 +65,12 @@ module.exports = {
 
 
 // ORDER
-// id_order    |   id_product  |   nama_product    |   id_history  |   price   |   ppn     |
-// 1           | 1             | Caffucino         | 1             | 25.000    | 2500      |
-// 2           | 1             | Caffucino         | 1             | 25.000    | 2500      |
-// 3           | 1             | Caffucino         | 1             | 25.000    | 2500      |
-// 4           | 2             | Cafelatte         | 1             | 15.000    | 1500      |
-// 5           | 2             | Caffucino         | 2             | 15.000    | 1500      |
+// id_order    |   id_product  |   nama_product    |    Gambar  |   id_history  |   price   |   ppn     |
+// 1           | 1             | Caffucino         |            |1              | 25.000    | 2500      |
+// 2           | 1             | Caffucino         |            |1              | 25.000    | 2500      |
+// 3           | 1             | Caffucino         |            |1              | 25.000    | 2500      |
+// 4           | 2             | Cafelatte         |            |1              | 15.000    | 1500      |
+// 5           | 2             | Caffucino         |            |2              | 15.000    | 1500      |
 
 // HISTORY
 // id_history  |   invoice     |   subtotal        |   Date        |
