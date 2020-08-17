@@ -1,20 +1,14 @@
 const connection = require("../config/mysql");
 
 module.exports = {
-    getAllHistory: () => {
-        return new Promise((resolve,reject) => {
-            connection.query(`SELECT * FROM category`, (error, result) => {
-                !error ? resolve(result) : reject(new Error(error))
-            });
-        })
-    }, postHistory: (dataHistory) => {
+    MpostOrder: (setData) => {
         return new Promise((resolve, reject) => {
-            connection.query("INSERT INTO history SET ?", dataHistory, (error, result) => {
+            connection.query("INSERT INTO order SET ?", setData, (error, result) => {
                 console.log(result)
                 if(!error) {
                     const newResult = {
                         product_id: result.insertId,
-                        ...dataHistory
+                        ...setData
                     }
                     resolve(newResult)
                 } else {

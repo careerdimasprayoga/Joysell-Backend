@@ -18,7 +18,17 @@ module.exports = {
             // for (i = 0; i < request.body.historys.length; i++) {  //loop through the array
             //     total += historys[i].price;  //Do the math!
             // }
-            console.log(request.body)
+            // console.log(request.body.historys)
+            Array.prototype.sum = function (prop) {
+                var total = 0
+                for ( var i = 0, _len = this.length; i < _len; i++ ) {
+                    total += this[i][prop]
+                }
+                return total
+            }
+            subtotal = request.body.historys.sum("price")
+            console.log(subtotal)
+            // console.log(request.body.historys.sum("price"))
             // const result = await postCategory(setData)
             return helper.response(response, 201, "Create Category Success", result);
         } catch (error) {
