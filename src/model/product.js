@@ -7,6 +7,36 @@ module.exports = {
                 !error ? resolve(result) : reject(new Error(error))
             });
         })
+    }, searchProduct: (limit, offset, search) => {
+        return new Promise((resolve, reject) => {
+            connection.query(`SELECT * FROM product WHERE name LIKE "%${search}%" LIMIT ? OFFSET ?`, [limit, offset], (error, result) => {
+                !error ? resolve(result) : reject(new Error(error))
+            });
+        })
+    }, getProductOrderName: (limit, offset) => {
+        return new Promise((resolve, reject) => {
+            connection.query("SELECT * FROM product ORDER BY name ASC LIMIT ? OFFSET ?", [limit, offset], (error, result) => {
+                !error ? resolve(result) : reject(new Error(error))
+            });
+        })
+    }, getProductOrderCategory: (limit, offset) => {
+        return new Promise((resolve, reject) => {
+            connection.query("SELECT * FROM product ORDER BY id_category ASC LIMIT ? OFFSET ?", [limit, offset], (error, result) => {
+                !error ? resolve(result) : reject(new Error(error))
+            });
+        })
+    }, getProductOrderDate: (limit, offset) => {
+        return new Promise((resolve, reject) => {
+            connection.query("SELECT * FROM product ORDER BY created ASC LIMIT ? OFFSET ?", [limit, offset], (error, result) => {
+                !error ? resolve(result) : reject(new Error(error))
+            });
+        })
+    }, getProductOrderPrice: (limit, offset) => {
+        return new Promise((resolve, reject) => {
+            connection.query("SELECT * FROM product ORDER BY price ASC LIMIT ? OFFSET ?", [limit, offset], (error, result) => {
+                !error ? resolve(result) : reject(new Error(error))
+            });
+        })
     }, getProductCount: () => {
         return new Promise((resolve, reject) => {
             connection.query("SELECT COUNT(*) as total FROM product", (error, result) => {

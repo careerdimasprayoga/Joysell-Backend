@@ -24,5 +24,5 @@ app.get("*", (request, response) => {
 })
 
 app.listen(3002, "127.0.0.1", () => {// Port | ip localhost
-    console.log("Express sudah berjalan di host: 127.0.0.1 and port: 3002 !")
+    console.log("Express connected at host: 127.0.0.1 and port: 3002 !")
 });

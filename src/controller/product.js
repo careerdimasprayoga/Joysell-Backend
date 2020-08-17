@@ -1,4 +1,4 @@
-const { getProduct, getProductCount, getProductById, postProduct, patchProduct, deleteProduct } = require("../model/product")
+const { getProduct, searchProduct, getProductOrderName, getProductOrderCategory, getProductOrderDate, getProductOrderPrice, getProductCount, getProductById, postProduct, patchProduct, deleteProduct } = require("../model/product")
 const qs = require('querystring')
 const helper = require("../helper/index.js")
 
@@ -47,6 +47,121 @@ module.exports = {
         } // { page: 1, totalPage: 2, limit: 2, totalData: 3 } = page 1, limit 2
         try {
             const result = await getProduct(limit, offset);
+            return helper.response(response, 200, "Get Product Success", result, pageInfo);
+        } catch(error) {
+            return helper.response(response, 400, "Bad Request", error);
+        }
+    }, searchProduct: async (request, response) => {
+        let {page, limit, search} = request.query // Destructuring
+        page = parseInt(page)
+        limit = parseInt(limit)
+        let totalData = await getProductCount()
+        let totalPage = Math.ceil(totalData / limit) // Biar gak 0.4 dan dibulatkan
+        let offset = page * limit - limit // Offset query
+        let prevLink = getPrevLink(page, request.query)
+        let nextLink = getNextLink(page, totalPage, request.query)
+        const pageInfo = {
+            page, // Kalo sama = page = page
+            totalPage,
+            limit,
+            totalData,
+            prevLink: prevLink && `http://127.0.0.1:3002/product?${prevLink}`,
+            nextLink: nextLink && `http://127.0.0.1:3002/product?${nextLink}`
+        } // { page: 1, totalPage: 2, limit: 2, totalData: 3 } = page 1, limit 2
+        try {
+            const result = await searchProduct(limit, offset, search);
+            return helper.response(response, 200, "Get Product Success", result, pageInfo);
+        } catch(error) {
+            return helper.response(response, 400, "Bad Request", error);
+        }
+    }, getProductOrderName: async (request, response) => {
+        let {page, limit} = request.query
+        page = parseInt(page)
+        limit = parseInt(limit)
+        let totalData = await getProductCount()
+        let totalPage = Math.ceil(totalData / limit)
+        let offset = page * limit - limit
+        let prevLink = getPrevLink(page, request.query)
+        let nextLink = getNextLink(page, totalPage, request.query)
+        const pageInfo = {
+            page,
+            totalPage,
+            limit,
+            totalData,
+            prevLink: prevLink && `http://127.0.0.1:3002/product?${prevLink}`,
+            nextLink: nextLink && `http://127.0.0.1:3002/product?${nextLink}`
+        }
+        try {
+            const result = await getProductOrderName(limit, offset);
+            return helper.response(response, 200, "Get Product Success", result, pageInfo);
+        } catch(error) {
+            return helper.response(response, 400, "Bad Request", error);
+        }
+    }, getProductOrderCategory: async (request, response) => {
+        let {page, limit} = request.query
+        page = parseInt(page)
+        limit = parseInt(limit)
+        let totalData = await getProductCount()
+        let totalPage = Math.ceil(totalData / limit)
+        let offset = page * limit - limit
+        let prevLink = getPrevLink(page, request.query)
+        let nextLink = getNextLink(page, totalPage, request.query)
+        const pageInfo = {
+            page,
+            totalPage,
+            limit,
+            totalData,
+            prevLink: prevLink && `http://127.0.0.1:3002/product?${prevLink}`,
+            nextLink: nextLink && `http://127.0.0.1:3002/product?${nextLink}`
+        }
+        try {
+            const result = await getProductOrderCategory(limit, offset);
+            return helper.response(response, 200, "Get Product Success", result, pageInfo);
+        } catch(error) {
+            return helper.response(response, 400, "Bad Request", error);
+        }
+    }, getProductOrderDate: async (request, response) => {
+        let {page, limit} = request.query
+        page = parseInt(page)
+        limit = parseInt(limit)
+        let totalData = await getProductCount()
+        let totalPage = Math.ceil(totalData / limit)
+        let offset = page * limit - limit
+        let prevLink = getPrevLink(page, request.query)
+        let nextLink = getNextLink(page, totalPage, request.query)
+        const pageInfo = {
+            page,
+            totalPage,
+            limit,
+            totalData,
+            prevLink: prevLink && `http://127.0.0.1:3002/product?${prevLink}`,
+            nextLink: nextLink && `http://127.0.0.1:3002/product?${nextLink}`
+        }
+        try {
+            const result = await getProductOrderDate(limit, offset);
+            return helper.response(response, 200, "Get Product Success", result, pageInfo);
+        } catch(error) {
+            return helper.response(response, 400, "Bad Request", error);
+        }
+    }, getProductOrderPrice: async (request, response) => {
+        let {page, limit} = request.query
+        page = parseInt(page)
+        limit = parseInt(limit)
+        let totalData = await getProductCount()
+        let totalPage = Math.ceil(totalData / limit)
+        let offset = page * limit - limit
+        let prevLink = getPrevLink(page, request.query)
+        let nextLink = getNextLink(page, totalPage, request.query)
+        const pageInfo = {
+            page,
+            totalPage,
+            limit,
+            totalData,
+            prevLink: prevLink && `http://127.0.0.1:3002/product?${prevLink}`,
+            nextLink: nextLink && `http://127.0.0.1:3002/product?${nextLink}`
+        }
+        try {
+            const result = await getProductOrderPrice(limit, offset);
             return helper.response(response, 200, "Get Product Success", result, pageInfo);
         } catch(error) {
             return helper.response(response, 400, "Bad Request", error);
