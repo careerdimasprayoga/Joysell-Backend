@@ -1,14 +1,19 @@
 const connection = require("../config/mysql");
 
 module.exports = {
-    MpostOrder: (setData) => {
+    getAllOrder: () => {
+        return new Promise((resolve,reject) => {
+            connection.query("SELECT * FROM orders", (error, result) => {
+                !error ? resolve(result) : reject(new Error(error))
+            });
+        })
+    }, postOrder: (dataOrder) => {
         return new Promise((resolve, reject) => {
-            connection.query("INSERT INTO order SET ?", setData, (error, result) => {
-                console.log(result)
+            connection.query("INSERT INTO orders SET ?", dataOrder, (error, result) => {
                 if(!error) {
                     const newResult = {
-                        product_id: result.insertId,
-                        ...setData
+                        // product_id: result.insertId,
+                        ...dataOrder
                     }
                     resolve(newResult)
                 } else {

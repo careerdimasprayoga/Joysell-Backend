@@ -1,10 +1,17 @@
-// const { MpostOrder } = require("../model/order")
+const { postOrder, getAllOrder } = require("../model/order")
 const { postHistory } = require("../model/history")
 const helper = require("../helper/index.js")
 
 
 module.exports = {
-    postOrder: async (request, response) => {
+    getAllOrder: async (request, response) => {
+        try {
+            const result = await getAllOrder();
+            return helper.response(response, 200, "Get Order Success", result);
+        } catch(error) {
+            return helper.response(response, 400, "Bad request", error);
+        }
+    }, postOrder: async (request, response) => {
         try {
             let dataPostman = request.body.orders
             // Handle History
@@ -20,8 +27,27 @@ module.exports = {
             }
             const resultHistory = await postHistory(dataHistory)
             const history_id = (resultHistory.product_id)
+            // dataPostman.map(async (value) => {
+            //     let dataOrder = {
+            //         id_history : 2,
+            //         id_product : value.id_product,
+            //         ppn : value.ppn,
+            //         price : value.price
+            //     }
+            //     const resultOrder = await MpostOrder(dataOrder)
+            //     console.log(dataOrder)
+            // })
+            for (let i = 0; i < dataPostman.length; i++) {
+                let dataOrder = {
+                    id_history : history_id,
+                    id_product : dataPostman[i].id_product,
+                    ppn : dataPostman[i].ppn,
+                    price : dataPostman[i].price
+                }
+                const resultOrder = await postOrder(dataOrder)
+            }
 
-            return helper.response(response, 201, "Create Category Success", resultHistory);
+            return helper.response(response, 201, "Create Order Success", resultHistory);
         } catch (error) {
             return helper.response(response, 400, "Bad Request", error);
         }

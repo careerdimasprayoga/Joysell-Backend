@@ -182,6 +182,7 @@ module.exports = {
         try {
             const setData = {
                 name: request.body.name,
+                image: request.body.image,
                 price: request.body.price,
                 id_category: request.body.id_category,
                 created: new Date(),

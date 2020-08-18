@@ -1,4 +1,4 @@
-const { getAllHistory, postHistory, patchHistory } = require("../model/category")
+const { getAllHistory, postHistory } = require("../model/history")
 const helper = require("../helper/index.js")
 
 module.exports = {
