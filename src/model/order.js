@@ -3,7 +3,7 @@ const connection = require("../config/mysql");
 module.exports = {
     getAllOrder: () => {
         return new Promise((resolve,reject) => {
-            connection.query("SELECT * FROM orders", (error, result) => {
+            connection.query("SELECT orders.id_history, product.name, orders.ppn, orders.price FROM orders INNER JOIN product ON orders.id_product = product.id", (error, result) => {
                 !error ? resolve(result) : reject(new Error(error))
             });
         })
